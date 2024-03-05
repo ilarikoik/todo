@@ -1,70 +1,70 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import TodoForm from "./TodoForm";
+import { AgGridReact } from "ag-grid-react";
+
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-material.css"; // Material Design theme
 
 export default function Todo() {
-  const [info, setInfo] = useState({ time: "", todo: "" });
+  const [info, setInfo] = useState({ time: "", todo: "", priority: "" });
   const [infoList, setInfoList] = useState([]);
+  const gridRef = useRef();
 
-  const changeValue = (event) => {
+ /*  const changeValue = (event) => {
     setInfo({ ...info, [event.target.name]: event.target.value });
-  };
+  }; */
 
   const handleClick = () => {
     setInfoList([info, ...infoList]);
-    setInfo({ time: "", todo: "" });
+    setInfo({ time: "", todo: "" ,  priority:""});
   };
-  const handlePoista = (index) => {
-    const kopio = [...infoList];
-    kopio.splice(index, 1);
-    setInfoList(kopio);
-    /* setInfoList(infoList.filter((itemi,currIndex) => currIndex !== index)); */
-    {/* <button onClick={() => handlePoista(index)}>Poista</button> */}
 
+  const handlePoista = () => {
+    /* const kopio = [...infoList];
+    kopio.splice(index, 1);
+    setInfoList(kopio); */
+    /* setInfoList(infoList.filter((itemi,currIndex) => currIndex !== index)); */
+    {
+      /* <button onClick={() => handlePoista(index)}>Poista</button> */
+    }
+    if (gridRef.current && gridRef.current.getSelectedNodes().length > 0) {
+      const selectedIndex = gridRef.current.getSelectedNodes()[0].childIndex;
+      setInfoList(infoList.filter((info, index) => index !== selectedIndex));
+    } else {
+      alert("Select a row first");
+    }
   };
+
+  
   return (
     <div>
-        <div className="formi">
-
-      <h2>Todo List</h2>
-      <input
-        className="inputs"
-        type="text"
-        placeholder="Time"
-        name="time"
-        onChange={changeValue}
-        value={info.time}
-      />
-      <input
-      className="inputs"
-        type="text"
-        placeholder="Todo"
-        name="todo"
-        onChange={changeValue}
-        value={info.todo}
-      />
-      <button className="add" onClick={handleClick}>lisää</button>
+      <div className="formi">
+        <h2>Todo List</h2>
+      <div className="itemit">
+      <TodoForm infoList={infoList} gridRef={gridRef} useRef={useRef} info={info} setInfo={setInfo} handleClick={handleClick} handlePoista={handlePoista}/>
       </div>
-
-    <div className="itemit">
-      <table className="hmm" >
-        <thead>
-          <tr>
-            <th className="hmmth">aika</th>
-            <th className="hmmth">todo</th>
-          </tr>
-        </thead>
-        <tbody>
-        {infoList.map((item, index) => (
-            <tr  key={index}>
-            <td>{item.time}</td>
-            <td>{item.todo}</td>
-            <td>
-              <button className="del" onClick={handlePoista}>Poista</button>
-            </td>
-          </tr>
-        ))}
-        </tbody>
-      </table>
-        </div>
+        {/*   <thead>
+            <tr>
+              <th className="hmmth">Time</th>
+              <th className="hmmth">Todo</th>
+              <th className="hmmth">Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            {infoList.map((item, index) => (
+              <tr key={index}>
+                <td>{item.time}</td>
+                <td>{item.todo}</td>
+                <td>{item.priority}</td>
+                <td>
+                  <button className="del" onClick={handlePoista}>
+                    Poista
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody> */}
+      </div>
     </div>
   );
 }
