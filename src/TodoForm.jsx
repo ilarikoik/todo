@@ -6,9 +6,9 @@ import "ag-grid-community/styles/ag-theme-material.css"; // Material Design them
 export default function TodoForm({gridRef,infoList, info,setInfo, handleClick, handlePoista}) {
 
   const [columnDefs,setColumnDefs] = useState ([
-    {field: 'time', filter:true},
-    {field: 'todo', sortable: false, filter:true},
-    {field: 'priority',filter: true,cellStyle: params => params.value === "High" ? {color: 'red'} : {color: 'black'} }
+    {field: 'time' /* headerName:'Time & Todo' */, filter:true, floatingFilter: true, /* valueGetter: p => p.time + ' ' + p.todo */checkboxSelection: true },
+    {field: 'todo', sortable: false, filter:true,floatingFilter: true },
+    {field: 'priority',filter: true,cellStyle: params => params.value === "High" ? {color: 'red'} : {color: 'black'},floatingFilter: true  }
   ])
 
   return (
@@ -41,7 +41,7 @@ export default function TodoForm({gridRef,infoList, info,setInfo, handleClick, h
       <button className='del' onClick={handlePoista}>Poista valittu</button>
 
     <div className='form'>
-      <div className="ag-theme-material" style={{width: 700, height: 500, borderRadius: '10px'}}>
+      <div className="ag-theme-material" style={{width: 700, height: 500, borderRadius: '10px', visibility: 'visible', opacity: 1}}>
       <AgGridReact 
       ref={gridRef}
       onGridReady={ params => gridRef.current = params.api }
