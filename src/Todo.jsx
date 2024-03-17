@@ -38,11 +38,8 @@ export default function Todo() {
   
   return (
     <div>
-      <div className="formi">
-        <h2>Todo List</h2>
-      <div className="itemit">
+        <h2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', color:'white',  background: '#007bff', borderRadius:'10px', fontFamily:'arial', height:'7vh' }} >Todo List</h2>
       <TodoForm infoList={infoList} gridRef={gridRef} useRef={useRef} info={info} setInfo={setInfo} handleClick={handleClick} handlePoista={handlePoista}/>
-      </div>
         {/*   <thead>
             <tr>
               <th className="hmmth">Time</th>
@@ -65,6 +62,5 @@ export default function Todo() {
             ))}
           </tbody> */}
       </div>
-    </div>
   );
 }
