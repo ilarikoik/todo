@@ -11,6 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
 export default function TodoForm({
   gridRef,
@@ -41,8 +42,9 @@ export default function TodoForm({
   //datepickerille oma funktio
   //date para
   //..info haetaa olio time ja sille : para arvoks
-  const dateChange = (date) => {
-    setInfo({...info, time: date})
+  const dateChange = (newDate) => {
+    const formattedDate = dayjs(newDate).format('DD-MM-YYYY');
+    setInfo({...info, time: formattedDate})
   }
 
   return (
@@ -56,14 +58,11 @@ export default function TodoForm({
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             variant="standard"
-            //datepickerille annetaan samat arvot ku alkuperäselle inputille
-            value={info.time} 
-            onChange={date => dateChange(date)} // Muutetaan tilaa uudella arvolla
+            onChange={newDate => dateChange(newDate)} // Muutetaan tilaa uudella arvolla
           />
-          
         </LocalizationProvider>
         <TextField
-          variant="standard"
+          variant="outlined"
           label="Description"
           type="text"
           p
@@ -72,7 +71,7 @@ export default function TodoForm({
           value={info.todo}
         />
         <TextField
-          variant="standard"
+          variant="outlined"
           label="Priority"
           type="text"
           name="priority"
@@ -93,7 +92,7 @@ export default function TodoForm({
           startIcon={<DeleteIcon></DeleteIcon>}
           variant="outlined"
           color="error"
-          className="del"
+          /* className="del" */
           onClick={handlePoista}
         >
           Poista valittu

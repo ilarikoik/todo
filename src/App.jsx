@@ -12,7 +12,7 @@ import { AppBar } from "@mui/material";
 import { TabPanel } from "@mui/base";
 
 function App() {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState("home");
 
   // kun event nii muutetaa value tabissa olevaa valueen (tabs value muuttuu)
   const changeValue = (event, value) => {
@@ -25,18 +25,18 @@ function App() {
         <Tabs value={value} /*value={value} css effekti, toimii ilmanki */ onChange={changeValue}>
           <Tab
             label="Home"
-            value={1} // valuen perusteella näytetää sivut
+            value={"home"} // valuen perusteella näytetää sivut
           />
           <Tab
             label="Todo"
-            value={2}
+            value={"todo"}
           />
         </Tabs>
       </AppBar>
       <Container maxWidth="x1">
         
         {/* Container component, which is basic layout component, and it centers your app content horizontally. maxWidth props defines the maximum width of our app, and we are using the largest value */}
-        {value === 1 ? <h1>kotisivu</h1> : <Todo />}
+        {value === "home" ? <h1>kotisivu</h1> : <Todo />}
       </Container>
     </div>
   );
